@@ -50,6 +50,7 @@ byte wiFiRetryCounter = 0;
 byte mqttCounter = 0;
 byte responseLength = 2;
 byte interval = 60;
+byte globalTopicLength = 0;
 
 String publishData = "";
 String alertMsg = "";

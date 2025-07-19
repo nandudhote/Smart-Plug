@@ -93,9 +93,9 @@ myWIFI::myWIFI() {}
 bool myWIFI::wiFiSetup(String ssid, String pass) {
   delay(10);             // Small delay for stability
   byte wiFiCounter = 0;  // Counter to retry WiFi connection attempts
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(SSID);  // Print the SSID we're trying to connect to
+  // Serial.println();
+  // Serial.print("Connecting to ");
+  // Serial.println(SSID);  // Print the SSID we're trying to connect to
 
   WiFi.begin(ssid.c_str(), pass.c_str());  // Start connecting to the WiFi network
   while (WiFi.status() != WL_CONNECTED) {  // Loop until connected
@@ -103,7 +103,7 @@ bool myWIFI::wiFiSetup(String ssid, String pass) {
     delay(250);
     digitalWrite(_wifiStatusLED, LOW);  // Turn LED OFF
     delay(250);
-    Serial.print(".");  // Print progress
+    // Serial.print(".");  // Print progress
     wiFiCounter++;      // Increment retry counter
 
     if (wiFiCounter >= 15) {  // If 15 tries failed, break out
@@ -117,12 +117,12 @@ bool myWIFI::wiFiSetup(String ssid, String pass) {
   }
 
   // If connected successfully:
-  Serial.println();
-  Serial.println("WiFi connected");
+  // Serial.println();
+  // Serial.println("WiFi connected");
   digitalWrite(_wifiStatusLED, LOW);  // Keep LED ON
   delay(100);
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());  // Show assigned IP address
+  // Serial.println("IP address: ");
+  // Serial.println(WiFi.localIP());  // Show assigned IP address
   ap.stopApServer();               // Stop the access point server
   ap.stopApWiFi();                 // Stop access point WiFi
   isWifiConnected = true;          // Set flag
@@ -155,13 +155,11 @@ bool myWIFI::wiFiLinkCheck() {
 void myWIFI::reconnectToMqtt(String pubTopic, String subTopic, String globalTopic) {
   String willMessage = "{" + deviceId + ":offline}";  // LWT (Last Will) message if device disconnects
   if (!client.connected()) {                          // If not connected to MQTT broker
-    Serial.print("Attempting MQTT connection...");
+    // Serial.print("Attempting MQTT connection...");
     // if (client.connect(deviceId.c_str(), mqttUserName, mqttUserPassword, pubTopic.c_str(), 1, true, willMessage.c_str())) {
     if (client.connect(deviceId.c_str(), pubTopic.c_str(), 1, true, willMessage.c_str())) {
       // Connected successfully
-      Serial.println("connected");
-      // client.subscribe(subTopic.c_str());                             // Subscribe to device-specific topic
-      // client.subscribe(globalTopic.c_str());                          // Subscribe to global topic
+      // Serial.println("connected");
       subscribeTopics(subTopic);
       subscribeTopics(globalTopic);
       String onlineMessage = "{" + deviceId + ":online}";             // Publish online status
@@ -186,8 +184,8 @@ void myWIFI::MQTT_Pull(char* topic, byte* payload, unsigned int length) {
       MqttRecdMsg += (char)payload[i];
     }
   }
-  Serial.println(MqttRecdMsg);
-  Serial.println();
+  // Serial.println(MqttRecdMsg);
+  // Serial.println();
 
   SplitData mqttDecodedMsg = wifiObj.splitStringByColon(MqttRecdMsg);  // Split message by ':'
 
@@ -267,7 +265,7 @@ String myWIFI::prepareDevID(byte mac[], String devPref) {
 
 // Clear stored WiFi credentials in EEPROM
 void myWIFI::earasWiFiCredentialsFromEEPROM() {
-  Serial.println("Clearing EEPROM");
+  // Serial.println("Clearing EEPROM");
   for (int i = 0; i < 42; i++) {
     EEPROM.write(i, 0);  // Clear first 42 bytes
   }

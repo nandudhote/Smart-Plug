@@ -35,10 +35,10 @@ void setup() {
   Topic = wiFI.createSubPubTopics(deviceId, subTopic, pubTopic, globalTopic);  // establish the connections with Mqtt
   wiFI.reconnectToMqtt(Topic.Publish, Topic.Subscribe, Topic.Global);
   cse7759.initialize_power_data(&powerData);
-  Serial.print("Subscribe : ");
-  Serial.println(Topic.Subscribe);
-  Serial.print("Publish : ");
-  Serial.println(Topic.Publish);
+  // Serial.print("Subscribe : ");
+  // Serial.println(Topic.Subscribe);
+  // Serial.print("Publish : ");
+  // Serial.println(Topic.Publish);
 }
 
 void loop() {

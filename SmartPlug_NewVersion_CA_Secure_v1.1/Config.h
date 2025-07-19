@@ -49,6 +49,7 @@ extern byte wiFiRetryCounter;
 extern byte mqttCounter;
 extern byte responseLength;
 extern byte interval;
+extern byte globalTopicLength;
 
 extern String publishData;
 extern String alertMsg;

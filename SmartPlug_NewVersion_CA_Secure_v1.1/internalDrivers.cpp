@@ -27,6 +27,11 @@ void internalDrivers::readDataFromEEPROM() {
     SSID = iwiFI.loadStringFromEEPROM(ssidEEPROMAdd, ssidLength);
     PASSWORD = iwiFI.loadStringFromEEPROM(passEEPROMAdd, passwordLength);
   }
+  globalTopicLength = EEPROM.read(globalTopicLenghtEEPROMAdd);
+  String globalTopicTemp = iwiFI.loadStringFromEEPROM(globalTopicEEPROMAdd, globalTopicLength);
+  if (globalTopicTemp != NULL) {
+    globalTopic = globalTopicTemp;
+  }
   byte intervalTemp = EEPROM.read(publishIntervalEEPROMAdd);
   if (intervalTemp != 0) {
     interval = intervalTemp;
